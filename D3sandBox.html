@@ -1,0 +1,110 @@
+<html>
+
+<head>
+	<title> D3 Sandbox</title>
+	<script src = "d3.js" charset = "utf-8"> </script>
+
+</head>
+
+<body>
+	<h1> Hello world </h1>
+
+	<!-- making Pie chart
+	we need to specify the radius, the arc, and the data
+	
+	width, height, radius, color
+	
+	data we use for the chart: come from outside source?
+	we can also use json here too.
+	
+	then create a pie variable: initialize??
+	and initialize the Arc
+	
+	then make the chart, specify the attributes: width, height...
+	
+	inside the chart, we appended g, what is g??
+	  -->
+	  
+	<div id='chart'> </div>  
+	<script>
+		var width = 500;
+		var height = 500;
+		var radius = 200;
+		var color = d3.scale.category20();
+		
+		var pieData = [
+			{
+				type1 : 'Mortgage',
+				amount1 : 2000
+			},
+			{
+				type1 : 'PGE bill',
+				amount1 : 80
+			},
+			{
+				type1 : 'Health insurance',
+				amount1: 88
+			},
+			{
+				type1 : 'life insurance',
+				amount1 : 500
+			},
+			{
+				type1 : 'credit Card',
+				amount1 : 300
+			},
+			{
+				type1 : 'misc'
+				amount1 : 100
+			}
+		];
+		
+		var pie = d3.layout.pie()
+			.value(function(d){
+				return d.amount1;
+			});
+		
+		var arc = d3.svg.arc
+			.outerRadius(radius)
+			
+		var chart = d3.select('#chart')
+			.append('svg')
+			.attr('width',width)
+			.attr('height',height)
+			.append('g')  
+			.attr('transform','translate('+(width - radius)+','+(height - radius)+')')
+
+		var path = svg.selectAll('path')
+			.data(pie(pieData))
+			.enter()
+			.append('path')
+			.attr('d',arc)
+			.attr('fill',function(d,i) {
+				return color(d.data.type1);
+			});
+					
+// 		var slices = d3.selectAll('g.slice')
+// 			.append('path')
+// 			.attr('fill',function(d,i){
+// 				return colors(i)
+// 			})
+// 			.attr('d',arc)	
+// 			
+// 		var text = d3.selectAll('g.slice')
+// 			.append('text')
+// 			.text(function(d,i){
+// 				return d.data.type1
+// 			})
+// 			.attr('text-anchor','middle')
+// 			.attr('fill','white')
+// 			.attr('transform',function(d){
+// 				d.innerRadius = 0;
+// 				d.outerRadius = radius;
+// 				return 'translate('+arc.centroid(d)+')'
+// 			})
+	
+	</script>
+
+</body>
+
+</html>

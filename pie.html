@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Step 2 - A Basic Donut Chart</title>
+    <link rel="stylesheet" href="normalize.css">
+  </head>
+  <body>
+    <div id="chart"></div>
+    <script src="d3.js"></script>
+    <script>
+      (function(d3) {
+        'use strict';
+        var dataset = [
+          { label: 'Mortgage', count: 2000 }, 
+          { label: 'credit Card', count: 300 },
+          { label: 'Health Insurance', count: 88 },
+          { label: 'Bills', count: 80 },
+          {label: 'Misc', count:100 },
+          {label: 'life insurance', count: 500}
+        ];
+        var width = 360;
+        var height = 360;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 120;                            // NEW
+        var color = d3.scale.category20b();
+        var svg = d3.select('#chart') 
+        // select the chart element.
+          .append('svg')
+        // add the svg element to the chart 
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+        // add the width, height to the svg 
+        // add the g element to svg.
+        // what is this g element anyway
+        
+          .attr('transform', 'translate(' + (width / 2) + 
+            ',' + (height / 2) + ')');
+        // centering g: it's the middle
+        
+        
+        
+        var arc = d3.svg.arc()
+          .innerRadius(radius - donutWidth)             // NEW
+          .outerRadius(radius);
+        // this makes the arc of the chart
+        // the length
+          
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.count; })
+          .sort(null);
+        //   layout the pie chart, initialize?
+          
+        var path = svg.selectAll('path')
+        // selection all path element inside svg
+          .data(pie(dataset))
+          // pass in the data
+          .enter()
+          // enter is a place holder
+          .append('path')
+          //  put the path element in the place holder
+          .attr('d', arc)
+          // we use d to specify the arc length
+          .attr('fill', function(d, i) { 
+            return color(d.data.label);
+            // and fill the arc with color
+          });
+      })(window.d3);
+    </script>
+  </body>
+</html>
